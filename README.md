@@ -37,7 +37,51 @@ Feedback is provided in terms of heuristic function
 <p> Evaluate the fitness function or Heuristic Function</p>
 <h3>Step-4:</h3>
 <p> Lopp Step -2 and Step-3  until we achieve the score to be Zero to achieve Global Minima.</p>
+<h3>Program:</h3>
 
+```
+import random
+import string
+
+def generate_random_solution(answer):
+    l = len(answer)  # Find the length of answer and store in l
+    return [random.choice(string.printable) for _ in range(l)]
+
+def evaluate(solution, answer):
+    print(solution)
+    target = list(answer)
+    diff = 0
+    for i in range(len(target)):
+        s = solution[i]
+        t = target[i]
+        # Calculate difference between ASCII values, take absolute value
+        diff += abs(ord(s) - ord(t))
+    return diff
+
+def mutate_solution(solution):
+    ind = random.randint(0, len(solution) - 1)
+    solution[ind] = random.choice(string.printable)
+    return solution
+
+def SimpleHillClimbing():
+    answer = "Artificial Intelligence"
+    best = generate_random_solution(answer)
+    best_score = evaluate(best, answer)
+
+    while True:
+        print("Score:", best_score, " Solution:", "".join(best))  
+        if best_score == 0:
+            break
+        new_solution = mutate_solution(list(best))
+        score = evaluate(new_solution, answer)   
+        if score < best_score:
+            best = new_solution
+            best_score = score
+
+# Run the algorithm
+SimpleHillClimbing()
+
+```
 <hr>
 <h2>Sample Input and Output</h2>
 <h2>Sample String:</h2> Artificial Intelligence
@@ -59,3 +103,5 @@ Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 1  Solution :  Artificial Intelligencf<br>
 Score: 0  Solution :  Artificial Intelligence<br>
+<h3>Result</h3>
+Thus the Simple Hill Climb Algorithm Implemented successfully.
